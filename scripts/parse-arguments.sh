@@ -75,6 +75,10 @@ for argument in "$@"; do
     SOURCE_TYPE=TAR
     SOURCE_VALUE="${argument#*=}"
     ;;
+  --source-git=*)
+    SOURCE_TYPE=GIT_CUSTOM
+    SOURCE_VALUE="${argument#*=}"
+    ;;
   # Which binutils to use (gnu or llvm)
   --binutils=* | -binutils=*)
     binutils_value="${argument#*=}"
