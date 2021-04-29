@@ -13,6 +13,7 @@ SOURCE_VALUE=4.3.1
 BINUTILS=gnu
 EXTERNAL_LIBRARIES=()
 FFMPEG_GPL_ENABLED=false
+STATIC_FFMPEG=false
 
 # All FREE libraries that are supported
 SUPPORTED_LIBRARIES_FREE=(
@@ -127,6 +128,9 @@ for argument in "$@"; do
   --enable-all-gpl | -all-gpl)
     EXTERNAL_LIBRARIES+=" ${SUPPORTED_LIBRARIES_GPL[@]}"
     FFMPEG_GPL_ENABLED=true
+    ;;
+  --static-build | -static) # build all included ffmpeg binary
+    STATIC_FFMPEG=true
     ;;
   *)
     echo "Unknown argument $argument"
