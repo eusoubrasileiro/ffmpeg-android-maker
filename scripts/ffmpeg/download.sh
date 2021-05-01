@@ -47,24 +47,6 @@ function ensureSourcesGit() {
   export SOURCES_DIR_ffmpeg=${FFMPEG_SOURCES}
 }
 
-# Custom GIT FFmpeg repository
-function ensureSourcesGitCustom() {
-  GIT_REPO=${FFMPEG_SOURCE_VALUE}
-
-  GIT_DIRECTORY=ffmpeg-git-custom
-
-  FFMPEG_SOURCES=$(pwd)/${GIT_DIRECTORY}
-
-  if [[ ! -d "$FFMPEG_SOURCES" ]]; then
-    git clone ${GIT_REPO} ${GIT_DIRECTORY}
-  fi
-
-  cd ${GIT_DIRECTORY}
-  git reset --hard
-
-  export SOURCES_DIR_ffmpeg=${FFMPEG_SOURCES}
-}
-
 # Actual code
 case ${FFMPEG_SOURCE_TYPE} in
 	GIT_TAG)
@@ -81,6 +63,9 @@ case ${FFMPEG_SOURCE_TYPE} in
 		;;
   GIT_CUSTOM)
     echo "Using FFmpeg custom git repository : ${FFMPEG_SOURCE_VALUE}"
-    ensureSourcesGitCustom
+    source ${SCRIPTS_DIR}/common-functions.sh
+    downloadGitRepository \
+      "ffmpeg" \
+      ${FFMPEG_SOURCE_VALUE}
     ;;
 esac
