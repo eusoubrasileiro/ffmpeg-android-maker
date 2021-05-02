@@ -18,14 +18,17 @@ function downloadTarArchive() {
     IGNORE_FIRST_FOLDER=
   fi
 
-  ARCHIVE_NAME=${DOWNLOAD_URL##*/}
-  # File name without extension
+  ARCHIVE_NAME=`echo ${DOWNLOAD_URL} | grep -oP '[^\/]+\.tar\.\w{2}'`
+  # File name without extension - it will be the FOLDER NAME
   LIBRARY_SOURCES="${ARCHIVE_NAME%.tar.*}"
+
+#  echo "ARCHIVE_NAME : ${ARCHIVE_NAME}"
+#  echo "LIBRARY_SOURCES: ${LIBRARY_SOURCES}"
 
   echo "Ensuring sources of ${LIBRARY_NAME} in ${LIBRARY_SOURCES}"
 
   if [[ ! -d "$LIBRARY_SOURCES" ]]; then
-    curl -LO ${DOWNLOAD_URL}
+    curl -L ${DOWNLOAD_URL} > ${ARCHIVE_NAME}
 
     EXTRACTION_DIR="."
     if [ "$NEED_EXTRA_DIRECTORY" = true ] ; then
@@ -34,10 +37,13 @@ function downloadTarArchive() {
     fi
 
     tar xf ${ARCHIVE_NAME} ${IGNORE_FIRST_FOLDER} -C ${EXTRACTION_DIR}
-    rm ${ARCHIVE_NAME}
+  #rm ${ARCHIVE_NAME}
   fi
 
   export SOURCES_DIR_${LIBRARY_NAME}=$(pwd)/${LIBRARY_SOURCES}
+#  X=SOURCES_DIR_${LIBRARY_NAME}
+#  echo ${X}
+#  echo "SOURCES_DIR LIBRARY ${!X}"
 }
 
 # Custom GIT FFmpeg repository
