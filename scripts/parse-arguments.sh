@@ -14,6 +14,7 @@ BINUTILS=gnu
 EXTERNAL_LIBRARIES=()
 FFMPEG_GPL_ENABLED=false
 STATIC_FFMPEG=false
+CLEAN_PREVIOUS=false
 
 # All FREE libraries that are supported
 SUPPORTED_LIBRARIES_FREE=(
@@ -90,6 +91,9 @@ for argument in "$@"; do
       echo "Unknown binutils: $binutils_value"
       ;;
     esac
+    ;;
+  --clean-previous | -clean)
+    CLEAN_PREVIOUS=true #Clearing previously build/build folders
     ;;
   # Arguments below enable certain external libraries to build into FFmpeg
   --enable-libaom | -aom)

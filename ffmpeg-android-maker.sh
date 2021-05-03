@@ -27,7 +27,7 @@ BUILD_DIR=${BASE_DIR}/build
 export BUILD_DIR_FFMPEG=$BUILD_DIR/ffmpeg
 # All external libraries are installed to a single root
 # to make easier referencing them when FFmpeg is being built.
-export BUILD_DIR_EXTERNAL=$BUILD_DIR/external
+export BUILD_DIR_DEPENDS=$BUILD_DIR/depends
 
 # Function that copies *.so files and headers of the current ANDROID_ABI
 # to the proper place inside OUTPUT_DIR
@@ -57,24 +57,26 @@ function checkTextRelocations() {
 
 # Actual work of the script
 
-# Clearing previously created binaries
-rm -rf ${BUILD_DIR}
-rm -rf ${STATS_DIR}
-rm -rf ${OUTPUT_DIR}
-mkdir -p ${STATS_DIR}
-mkdir -p ${OUTPUT_DIR}
-
 # Exporting more necessary variabls
 source ${SCRIPTS_DIR}/export-host-variables.sh
 source ${SCRIPTS_DIR}/parse-arguments.sh
+
+if [ "$CLEAN_PREVIOUS" = true ] ; then
+  # Clearing previously created binaries
+  rm -rf ${BUILD_DIR}
+  rm -rf ${STATS_DIR}
+  rm -rf ${OUTPUT_DIR}
+  mkdir -p ${STATS_DIR}
+  mkdir -p ${OUTPUT_DIR}
+fi
 
 # Treating FFmpeg as just a module to build after its dependencies
 COMPONENTS_TO_BUILD=${EXTERNAL_LIBRARIES[@]}
 # other modules motion
 #COMPONENTS_TO_BUILD+=( "libmicrohttpd" )
-COMPONENTS_TO_BUILD+=( "libjpegturbo" )
-#COMPONENTS_TO_BUILD+=( "libmotion" )
-COMPONENTS_TO_BUILD+=( "ffmpeg" )
+#COMPONENTS_TO_BUILD+=( "libjpegturbo" )
+#COMPONENTS_TO_BUILD+=( "ffmpeg" )
+COMPONENTS_TO_BUILD+=( "libmotion" )
 
 # Get the source code of component to build
 for COMPONENT in ${COMPONENTS_TO_BUILD[@]}
