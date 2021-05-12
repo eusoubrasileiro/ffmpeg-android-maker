@@ -1,6 +1,36 @@
 # My use-case generate libmicrohttpd
 
-I modified the building scripts to include building libmicrohttpd. I failed to build motion as a shared library from here. I only managed to build it as a static library. 
+I modified the building scripts to include building libmicrohttpd. I failed to build motion as a shared library from here. I only managed to build it as a static library but also incomplete since libjpeg didnt compile for `x86`. 
+
+My usage to build motion as static library only works for  `arm64-v8a`
+
+Modify `ffmpeg-android-maker.sh` to 
+
+```
+COMPONENTS_TO_BUILD+=( "libmicrohttpd" )
+COMPONENTS_TO_BUILD+=( "libjpegturbo" )
+COMPONENTS_TO_BUILD+=( "ffmpeg" )
+COMPONENTS_TO_BUILD+=( "libmotion" )
+```
+
+```
+./ffmpeg-android-maker.sh --android-api-level=27 --target-abis=arm64-v8a  --source-git=https://github.com/eusoubrasileiro/FFmpeg.git
+```
+
+My usage to build libmicrohttpd for arm64-v8a and x86
+
+Modify `ffmpeg-android-maker.sh` to 
+
+```
+COMPONENTS_TO_BUILD+=( "libmicrohttpd" )
+#COMPONENTS_TO_BUILD+=( "libjpegturbo" )
+#COMPONENTS_TO_BUILD+=( "ffmpeg" )
+#COMPONENTS_TO_BUILD+=( "libmotion" )
+```
+
+```
+./ffmpeg-android-maker.sh --android-api-level=27 --target-abis=arm64-v8a,x86
+```
 
 # ffmpeg-android-maker
 
