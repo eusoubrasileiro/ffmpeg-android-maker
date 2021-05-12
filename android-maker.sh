@@ -73,10 +73,10 @@ fi
 # Treating FFmpeg as just a module to build after its dependencies
 COMPONENTS_TO_BUILD=${EXTERNAL_LIBRARIES[@]}
 # other modules motion
-#COMPONENTS_TO_BUILD+=( "libmicrohttpd" )
+COMPONENTS_TO_BUILD+=( "libmicrohttpd" )
 #COMPONENTS_TO_BUILD+=( "libjpegturbo" )
 #COMPONENTS_TO_BUILD+=( "ffmpeg" )
-COMPONENTS_TO_BUILD+=( "libmotion" )
+#COMPONENTS_TO_BUILD+=( "libmotion" )
 
 # Get the source code of component to build
 for COMPONENT in ${COMPONENTS_TO_BUILD[@]}
