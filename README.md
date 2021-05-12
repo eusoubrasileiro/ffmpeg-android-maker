@@ -1,3 +1,7 @@
+# My use-case generate libmicrohttpd
+
+I modified the building scripts to include building libmicrohttpd. I failed to build motion as a shared library from here. I only managed to build it as a static library. 
+
 # ffmpeg-android-maker
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/6b9a9fe4c6874e65a5e2a3f9beb15605)](https://app.codacy.com/manual/Javernaut/ffmpeg-android-maker)
