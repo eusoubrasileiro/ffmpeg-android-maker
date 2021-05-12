@@ -1,10 +1,16 @@
-# My use-case generate libmicrohttpd
+# Generates libmicrohttpd for android
 
-I modified the building scripts to include building libmicrohttpd. I failed to build motion as a shared library from here. I only managed to build it as a static library but also incomplete since libjpeg didnt compile for `x86`. 
+I modified the building scripts to build only libmicrohttpd. I failed to build the entire motion-project as a shared library from here. I only managed to build it as a static library but also incomplete since libjpeg didn't compile for `x86`. 
 
-My usage to build motion as static library only works for  `arm64-v8a`
+To build libmicrohttpd for arm64-v8a and x86
 
-Modify `ffmpeg-android-maker.sh` to 
+```
+./android-maker.sh --android-api-level=27 --target-abis=arm64-v8a,x86
+```
+
+To build motion as static library only works for  `arm64-v8a`
+
+Modify `android-maker.sh` to 
 
 ```
 COMPONENTS_TO_BUILD+=( "libmicrohttpd" )
@@ -13,26 +19,13 @@ COMPONENTS_TO_BUILD+=( "ffmpeg" )
 COMPONENTS_TO_BUILD+=( "libmotion" )
 ```
 
-```
-./ffmpeg-android-maker.sh --android-api-level=27 --target-abis=arm64-v8a  --source-git=https://github.com/eusoubrasileiro/FFmpeg.git
-```
-
-My usage to build libmicrohttpd for arm64-v8a and x86
-
-Modify `ffmpeg-android-maker.sh` to 
+I will use the motion repository https://github.com/eusoubrasileiro/motion.git but you can use the original repository as well. 
 
 ```
-COMPONENTS_TO_BUILD+=( "libmicrohttpd" )
-#COMPONENTS_TO_BUILD+=( "libjpegturbo" )
-#COMPONENTS_TO_BUILD+=( "ffmpeg" )
-#COMPONENTS_TO_BUILD+=( "libmotion" )
+./android-maker.sh --android-api-level=27 --target-abis=arm64-v8a  --source-git=https://github.com/eusoubrasileiro/FFmpeg.git
 ```
 
-```
-./ffmpeg-android-maker.sh --android-api-level=27 --target-abis=arm64-v8a,x86
-```
-
-# ffmpeg-android-maker
+# Original docs android-maker (ffmpeg-android-maker)
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/6b9a9fe4c6874e65a5e2a3f9beb15605)](https://app.codacy.com/manual/Javernaut/ffmpeg-android-maker)
 [![Compilability check](https://github.com/Javernaut/ffmpeg-android-maker/actions/workflows/compilability_check.yml/badge.svg?branch=master)](https://github.com/Javernaut/ffmpeg-android-maker/actions/workflows/compilability_check.yml)
